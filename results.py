@@ -107,5 +107,5 @@ while 1:
 	old_marks = marks
 	initial_run = 0
 	iterations += 1
-	time.sleep(sys.argv[1])   				#Wait time in seconds
+	time.sleep(int(sys.argv[1]))   				#Wait time in seconds
 
