@@ -1,4 +1,4 @@
-import requests, json, time
+import requests, json, time, sys
 from lxml import html
 from lxml import etree as et
 from twilio.rest import Client
@@ -49,11 +49,11 @@ while 1:
 	)
 
 	root = et.HTML(result.text)
-	## FOR TESTING
+	#FOR TESTING
 	# f = open('marks.txt')
 	# result = f.read()
 	# root = et.HTML(result)
-	##
+	
 	modules = []
 	marks = []
 	
@@ -74,6 +74,7 @@ while 1:
 		if ((initial_run == 0) and (marks[i] != old_marks[i])):					#If a mark has changed
 			module = str(modules[i])
 			notification = module.upper() + ": YOU ACHIEVED A MARK OF " + marks[i]
+			notification2 = module.upper() + " IS UIT"
 			#Send SMS using Twilio
 			message = client.messages \
 		    .create(
@@ -82,13 +83,29 @@ while 1:
 		         status_callback='http://postb.in/1234abcd',
 		         to='+27713313052'
 		     )
+			#Francis
+			message = client.messages \
+		    .create(
+		         body= notification2,
+		         from_='+12055731812',
+		         status_callback='http://postb.in/1234abcd',
+		         to='+27737400919'
+		     )
+			#Eberhardt
+			message = client.messages \
+		    .create(
+		         body= notification2,
+		         from_='+12055731812',
+		         status_callback='http://postb.in/1234abcd',
+		         to='+27834424653'
+		     )
 
-		#print(f"{modules[i]:<25}{marks[i]:>5}")
+
+		print(f"{modules[i]:<25}{marks[i]:>5}")
 		i = i+1
 	print('Iterations: ' + str(iterations))
 	old_marks = marks
 	initial_run = 0
 	iterations += 1
-	time.sleep(60)   				#Wait time in seconds, default is 1 min
-
+	time.sleep(sys.argv[1])   				#Wait time in seconds
 
